@@ -136,16 +136,18 @@ prompt = ClinicalPromptTemplates.patient_summary_and_concerns(pseudonymized)
 verification = OutputVerifier().verify_output(llm_output, pseudonymized.data_sources)
 ```
 
-See [LLM_INFERENCE_PIPELINE.md](../LLM_INFERENCE_PIPELINE.md) for full documentation, examples, and FastAPI integration patterns.
+See the repository docs for full documentation, examples, and FastAPI
+integration patterns.
 
 ## Key Files & Reference
-- Architecture overview: [myHealth_Architecture.md](../myHealth_Architecture.md)
+- Architecture overview:
+  [system_architecture.md](/Users/julianbuccat/Projects/Dev/myHealth/docs/architecture/system_architecture.md)
 - Executive summary: [myHealth_Executive_Summary.md](../myHealth_Executive_Summary.md)
 - Bedrock integration reference: [invoke_bedrock.py](../invoke_bedrock.py)
 - VS Code extension setup: [secure-claude-proxy-llm-copilot-ext.md](../secure-claude-proxy-llm-copilot-ext.md)
-- **LLM Inference Pipeline**: [LLM_INFERENCE_PIPELINE.md](../LLM_INFERENCE_PIPELINE.md) ← Start here for privacy-preserving inference
-- Python version contract: [python.instructions.md](../python.instructions.md)
-- Interface/boundary patterns: [interface.instructions.md](../interface.instructions.md)
+- Python version contract: [python.md](/Users/julianbuccat/Projects/Dev/myHealth/.github/instructions/global/python.md)
+- Interface/boundary patterns:
+  [interface-boundaries.md](/Users/julianbuccat/Projects/Dev/myHealth/.github/instructions/global/interface-boundaries.md)
 
 ---
 
