@@ -44,16 +44,3 @@ Recommended starting points:
 - [ADRs](docs/adr)
 
 
-
-
-
-Human-facing development knowledge is exposed separately under
-[knowledge_base](knowledge_base):
-
-- [coding_drills](knowledge_base/coding_drills)
-- [incident_reports](knowledge_base/incident_reports)
-- [personal_learning](knowledge_base/personal_learning)
-
-See
-[knowledge_base/README.md](knowledge_base/README.md)
-to understand the structure of `knowledge_base/`
