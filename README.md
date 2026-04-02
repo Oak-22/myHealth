@@ -8,9 +8,9 @@ Healthcare platforms struggle to balance **real-time intelligence** with **priva
 
 ## Solution
 myHealth delivers:
-- **Seamless multi-source data ingestion** from x,y,z.
+- **Seamless multi-source data ingestion** 
 - **Secure cloud architecture** (AWS VPC-constrained, zero public internet, HIPAA-eligible services).
-- **AI-powered chatbot agent** with pseudonymized health records, providing Q&A, triage, and lifestyle recommendations.
+- **AI reasoning chatbot** with pseudonymized health records, providing Q&A, triage, and lifestyle recommendations.
 - **Observability & governance** through auditable system telemetry, operational visibility, and compliance-oriented controls.
 
 ## Differentiation
