@@ -1,36 +1,28 @@
-# Repo Instruction Models
+# Repository Instructions
 
-This folder contains **project-specific agent instructions** for
+This directory contains project-specific instruction files for
 `myHealth`.
 
-Think of these files as focused conceptual models inside the project,
-not as generic global instructions.
-
-## Current Models
-
-- `myhealth-context.md`
-  Broad product and system context for `myHealth`
-- `privacy-and-phi-boundary.md`
-  Privacy, pseudonymization, and PHI-boundary expectations
+Use this layer for repository-scoped context that an IDE-based agent
+needs in order to operate safely and correctly within this codebase.
 
 ## Scope
 
-This folder is for `myHealth`-specific agent guidance only.
+Files in this directory may define:
 
-Keep here:
+- product and system context for `myHealth`
+- privacy, PHI, and safety boundaries
+- architecture constraints tied to this repository
+- repo-local workflows or conventions
 
-- project architecture and system context
-- domain-specific constraints
-- privacy and security boundaries specific to `myHealth`
-- repo-local workflows and conventions
+## Current Files
 
-Do not keep here:
-
-- reusable cross-repo writing rules
-- generic Python or interface guidance
-- human-facing notes, incident reports, or coding drills
+- `myhealth-context.md`
+  Project context for `myHealth`
+- `privacy-and-phi-boundary.md`
+  Privacy and PHI handling boundaries
 
 ## Boundary
 
-If an instruction is reusable across unrelated repositories, it should
-not live here. It belongs in `../global/` instead.
+Reusable cross-project guidance does not belong here. Place that in
+`../global/`.

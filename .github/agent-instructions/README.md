@@ -1,30 +1,36 @@
 # Agent Instructions
 
-This directory contains agent-facing instruction assets for this
-repository.
+This directory contains IDE-facing instruction assets used to support
+human plus AI collaboration in this repository.
 
-## Structure
+## Layer Model
 
 - `global/`
-  Reusable agent guidance that is not specific to project `myHealth`
+  Reusable guidance intended to apply across repositories
 - `repo/`
-  `myHealth`-specific instruction models and operating constraints
+  Repository-specific context, boundaries, and operating constraints
 
-## How To Use It
+## Navigation
 
-- Start here to understand the instruction layout
-- Read `global/README.md` for reusable guidance categories
-- Read `repo/README.md` for `myHealth`-specific models and boundaries
-- Load only the subject files relevant to the current task
+Use this README to understand the directory layout, then move to the
+layer that matches the task:
 
-## Keep Out Of `.github/instructions/`
+- read `global/README.md` for reusable cross-project guidance
+- read `repo/README.md` for repository-specific guidance
+- load only the subject files needed for the current task
 
-- `knowledge_base/`
-  Human-facing shared knowledge such as personal learning notes,
-  incident reports, and coding drills
-- `docs/`
-  Repo-owned human documentation such as architecture notes, ADRs, and
-  runbooks
+## Placement Rules
 
-That material should stay outside the agent instruction tree.
+Put content in `global/` when it is reusable outside this repository,
+such as general coding guidance, formatting rules, or interface design
+principles.
 
+Put content in `repo/` when it depends on the local codebase, domain,
+architecture, privacy model, or repository-specific workflows.
+
+## Notes
+
+The `global/` directory may be locally symlinked to a canonical
+cross-repository configuration path. That implementation detail should
+not change how this tree is read: start at this overview, then follow
+the layer-specific READMEs.
