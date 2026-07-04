@@ -1,16 +1,16 @@
-# ADR 0005: Use FastAPI As The Primary Application Framework For MVP
+# ADR 0005: Use FastAPI As The Primary Python Service Framework
 
 ## Status
 
-Accepted
+Accepted, amended by ADR 0006
 
 ## Context
 
-`myHealth` is currently optimized around backend services, ingestion
-pipelines, validation boundaries, retrieval, and inference
-orchestration. The project also aims to signal strong Python backend
-and data-engineering capability without introducing unnecessary
-framework complexity for a solo developer workflow.
+`myHealth` is optimized around backend services, ingestion pipelines,
+validation boundaries, retrieval, and inference orchestration. The
+project also aims to signal strong Python backend and data-engineering
+capability while giving the developer direct exposure to production
+software engineering patterns.
 
 Two broad application approaches were considered:
 
@@ -30,16 +30,25 @@ frameworks at MVP stage would increase:
 
 ## Decision
 
-Use FastAPI as the primary application framework for the MVP.
+Use FastAPI as the primary Python framework for user-facing and
+service-facing application surfaces.
 
-The initial system should remain a single FastAPI-centered backend with
-clear internal boundaries for:
+ADR 0008 defines the user-facing UI stack as FastAPI route handlers,
+Jinja2 templates, HTML forms/links, CSS, and optional HTMX progressive
+enhancement. Custom JavaScript/TypeScript and SPA frameworks are out of
+scope unless a future ADR changes that decision.
+
+The system should use clear boundaries for:
 
 - API routes
 - ingestion workflows
 - domain services
 - repositories and persistence logic
 - retrieval and inference orchestration
+
+ADR 0006 changes the deployment target from a single FastAPI-centered
+application to an event-driven, service-isolated architecture. FastAPI
+remains the primary framework for service APIs and gateway behavior.
 
 Django is deferred unless a concrete product need emerges for:
 
@@ -52,25 +61,25 @@ Django is deferred unless a concrete product need emerges for:
 
 ### Positive
 
-- keeps the MVP architecture simpler and more coherent
+- keeps the Python application model coherent across services
 - aligns with the backend/service orientation already expressed in the
   repo
 - supports async-friendly APIs and typed request/response contracts
-- reduces framework sprawl for a solo developer
+- reduces framework sprawl while still allowing service isolation
 - improves the chance of successful agent-assisted implementation
 
 ### Negative
 
 - Django admin and batteries-included portal ergonomics are deferred
 - some internal dashboard or CRUD workflows may require more custom work
-- a future second framework may still be introduced if the product
-  surface expands
+- distributed deployment still introduces operational complexity through
+  queues, workers, contracts, and observability
 
 ## Follow-Up Guidance
 
-The FastAPI codebase should still be structured to allow future
-extraction or layering. Internal modules should be separated by
-responsibility so the system can evolve without a monolithic tangle.
+FastAPI services should be structured with consistent internal layering.
+Internal modules should be separated by responsibility so each service
+can evolve without becoming tangled.
 
 Suggested internal boundaries:
 
@@ -81,8 +90,13 @@ Suggested internal boundaries:
 - `workflows/`
 - `models/`
 
+ADR 0006 defines the first concrete split: a Health Gateway Service,
+private Clinical Ingestion Worker, and private Genomic Annotation Worker
+connected through object storage and an asynchronous message broker.
+
 ## Evidence
 
 - [system_architecture.md](/Users/julianbuccat/Projects/Dev/myHealth/docs/architecture/system_architecture.md)
 - [system_spec.md](/Users/julianbuccat/Projects/Dev/myHealth/docs/architecture/system_spec.md)
 - [0001_backend_centric_platform.md](/Users/julianbuccat/Projects/Dev/myHealth/docs/adr/0001_backend_centric_platform.md)
+- [0008_server_rendered_python_first_ui.md](/Users/julianbuccat/Projects/Dev/myHealth/docs/adr/0008_server_rendered_python_first_ui.md)

@@ -91,6 +91,82 @@ exhaustive.
 - `collected_at`
   Sample collection timestamp when available
 
+### `daily_telemetry_entries`
+
+- `telemetry_entry_id`
+  Canonical identifier for a daily telemetry record
+- `subject_id`
+  Pseudonymized subject reference
+- `entry_date`
+  Local calendar date the entry describes
+- `source_type`
+  Manual entry, Apple Health import, CPAP export, workout import, or
+  other telemetry source
+- `recorded_at`
+  Timestamp when the platform accepted or recorded the entry
+- `source_record_ref`
+  Trace back to the source form submission, file, or imported record
+
+### `sleep_recovery_assessments`
+
+- `assessment_id`
+  Canonical identifier for a subjective recovery assessment
+- `subject_id`
+  Pseudonymized subject reference
+- `entry_date`
+  Date the assessment describes
+- `restedness_score`
+  User-reported restedness rating
+- `mental_clarity_score`
+  User-reported mental clarity rating
+- `sleep_inertia_score`
+  User-reported sleep inertia rating
+- `energy_score`
+  Midday energy rating when available
+- `focus_score`
+  Midday focus rating when available
+- `productivity_score`
+  End-of-day productivity or performance rating when available
+
+### `cpap_sessions`
+
+- `cpap_session_id`
+  Canonical identifier for a CPAP therapy session
+- `subject_id`
+  Pseudonymized subject reference
+- `session_started_at`
+  Start timestamp for the therapy session
+- `usage_minutes`
+  Total CPAP usage duration
+- `ahi`
+  Apnea-hypopnea index reported by the source system
+- `leak_95_percentile`
+  95th percentile leak value when available
+- `pressure_95_percentile`
+  95th percentile pressure value when available
+- `mask_removed`
+  Whether the mask was removed during the session
+- `source_record_ref`
+  Trace back to OSCAR, device export, or manual source
+
+### `behavioral_factors`
+
+- `behavioral_factor_id`
+  Canonical identifier for a daily behavior factor
+- `subject_id`
+  Pseudonymized subject reference
+- `entry_date`
+  Date the behavior describes
+- `factor_type`
+  Workout, caffeine, alcohol, late meal, stressor, congestion, or other
+  behavioral category
+- `value_numeric`
+  Numeric representation where applicable
+- `value_text`
+  Categorical or free-text representation where applicable
+- `unit`
+  Unit for numeric values when applicable
+
 ### `documents`
 
 - `document_id`
@@ -142,6 +218,7 @@ The platform should distinguish at least:
 - pseudonymized subject references
 - clinical content
 - derived analytics
+- telemetry source facts
 - operational metadata
 
 This classification helps determine allowed storage, retrieval, logging,

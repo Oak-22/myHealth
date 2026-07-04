@@ -44,6 +44,8 @@ Provide a secure backend platform that:
 ## Core Use Cases
 
 - ingest Apple Health exports into normalized health record tables
+- collect longitudinal personal telemetry for sleep, recovery,
+  behavior, CPAP therapy, and cognitive-performance tracking
 - ingest lab exports and map biomarkers into longitudinal series
 - register and parse clinical PDFs for downstream retrieval
 - annotate genomic variants and link them to supporting provenance
@@ -58,6 +60,8 @@ Provide a secure backend platform that:
 - backend APIs and workflow orchestration
 - ingestion pipelines for XML, JSON, CSV, PDF, and VCF-style sources
 - operational data modeling in PostgreSQL
+- canonical telemetry records for user-entered behaviors, subjective
+  recovery, CPAP metrics, and wearable-derived observations
 - workflow coordination and idempotency support
 - retrieval-aware inference orchestration
 - analytical downstream modeling

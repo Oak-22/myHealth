@@ -53,6 +53,22 @@ Representative entities:
 These entities capture normalized health facts derived from source
 systems.
 
+### Telemetry And Recovery Facts
+
+Representative entities:
+
+- `daily_telemetry_entries`
+- `sleep_recovery_assessments`
+- `cpap_sessions`
+- `behavioral_factors`
+- `cognitive_performance_ratings`
+
+These entities capture source facts about daily behaviors, sleep,
+recovery, therapy usage, and subjective performance. They are canonical
+operational records when entered or imported. Derived recovery scores,
+correlations, predictors, and dashboard summaries live downstream in the
+analytics layer.
+
 ### Documents And Provenance
 
 Representative entities:
@@ -83,6 +99,8 @@ Representative entities or downstream models:
 
 - trend aggregates
 - derived health metrics
+- recovery and sleep feature models
+- CPAP adherence and therapy-effectiveness summaries
 - dashboard-serving summary tables
 - cohort-ready analytical views
 
@@ -92,6 +110,7 @@ These live downstream from operational truth.
 
 - PostgreSQL stores normalized operational entities and retrieval
   metadata
+- PostgreSQL stores raw telemetry/recovery source facts
 - DynamoDB stores ephemeral workflow coordination state
 - BigQuery stores analytical derivatives
 

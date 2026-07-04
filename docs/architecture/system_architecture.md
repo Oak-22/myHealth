@@ -3,11 +3,17 @@
 ## Overview
 The myHealth platform is a **personal health data and inference system** designed to ingest heterogeneous health data sources and enable retrieval‑augmented reasoning over longitudinal health records. The system unifies wearable data, laboratory exports, clinical documents, genomic datasets, and external health APIs into a normalized backend platform capable of analytics, semantic retrieval, and LLM‑assisted interpretation.
 
-Rather than functioning as a traditional application where most logic lives in the UI, myHealth is architected as a **backend‑centric health data platform**. The frontend acts primarily as a thin delivery layer while the backend handles ingestion pipelines, data normalization, inference orchestration, and analytical processing.
+Rather than functioning as a traditional application where most logic lives in the UI, myHealth is architected as a **backend‑centric, event-driven health data platform**. The frontend acts primarily as a thin delivery layer while backend services handle ingestion pipelines, data normalization, inference orchestration, and analytical processing.
 
 Key architectural priorities include:
 - **Secure handling of sensitive health data**, including PHI/PII segregation across storage, retrieval, and inference workflows.
 - **Composable services** enabling independent scaling of ingestion, inference, and analytics.
+- **Service isolation by workload**, especially between user-facing gateway behavior and heavy biometric/document parsing.
+- **Dual-domain governance**, separating restrained clinical workflows from more autonomous preclinical molecular and genomic workflows.
+- **Telemetry analytics as a first-class workload**, preserving
+  longitudinal behavioral, sleep, recovery, CPAP, and performance
+  signals as canonical source facts before deriving trends or
+  predictions.
 - **Cloud‑native infrastructure** designed to support heterogeneous healthcare data pipelines and ML‑enabled insights.
 
 ## Engineering Principles
@@ -37,6 +43,39 @@ These systems generate local device exports containing longitudinal biometric me
 
 **Data formats demonstrated**
 - XML (Apple Health "Export All Health Data" archive)
+
+### Personal Telemetry And Recovery Tracking
+
+These inputs capture longitudinal behavioral and subjective signals that
+explain why health and cognitive-performance outcomes vary over time.
+
+Unlike dashboard-only analytics, telemetry contributes new source facts
+to the platform. Raw telemetry entries are operational records with
+provenance, timestamps, and sensitivity classification. Recovery scores,
+correlations, predictions, and trend summaries are downstream analytical
+derivatives.
+
+**Source examples**
+- daily behavior logs
+- sleep and recovery questionnaires
+- CPAP / OSCAR exports
+- workout summaries
+- subjective cognitive-performance ratings
+
+**Data formats demonstrated**
+- server-rendered HTML forms
+- CSV exports
+- manual entries
+- future API or file imports
+
+**Metric examples**
+- workout type, duration, and intensity
+- late meal, alcohol, caffeine, stressor, and congestion indicators
+- CPAP usage, AHI, leak, pressure, and mask-removal events
+- sleep duration, deep sleep, REM, resting heart rate, HRV, respiratory
+  rate, and wrist temperature
+- restedness, mental clarity, energy, focus, productivity, and
+  motivation ratings
 
 ### EHR APIs and Connected Services
 
@@ -108,37 +147,92 @@ These heterogeneous sources intentionally expose the system to multiple data for
 
 Multimodal reasoning over these documents (text and images) is handled using off‑the‑shelf vision-capable LLMs rather than custom model training, reducing system complexity, regulatory exposure, and long-term maintenance.
 
+## Domain Governance Model
+
+`myHealth` is intentionally split into two governance domains.
+
+### Clinical Domain
+
+The clinical domain includes patient-facing and PHI-adjacent workflows:
+wearable health records, lab reports, EHR-style data, clinical
+documents, imaging interpretations, chat, retrieval, and health insight
+surfaces.
+
+This domain is restrained by default:
+
+- strict PHI/PII minimization
+- pseudonymization before inference
+- provenance-aware retrieval
+- bounded product LLM behavior
+- audit-friendly workflow state
+- conservative patient-facing outputs
+
+### Preclinical Molecular Domain
+
+The preclinical molecular domain includes non-PHI, synthetic, public, or
+pseudonymized genomic and molecular workloads: VCF parsing,
+ClinVar-style annotation, coordinate mappings, molecular matrices, and
+research-style analytical pipelines.
+
+This domain may be more autonomous:
+
+- heavier worker dependencies and memory profiles
+- high-throughput batch processing
+- exploratory annotation and scoring workflows
+- analytical/HPC-style output generation
+- less coupling to patient-facing clinical UI behavior
+
+The molecular domain must not silently cross into patient-facing
+clinical guidance. Any derived molecular result that becomes clinical
+context needs an explicit review, provenance, and pseudonymized linkage
+boundary.
+
 ## Front-End
 
 The frontend acts strictly as a **delivery layer**, not a system-of-record or application logic tier.
 
-- **Streamlit (Python)** for rapid UI development and chatbot experimentation during early iterations.
-- **FastAPI templating layer (Jinja2)** for server-rendered HTML views in the core application.
-- **HTMX** for lightweight dynamic interactions and partial page updates without heavy JavaScript frameworks.
-- **HTML / CSS** as the primary presentation technologies.
-- **Minimal JavaScript only where unavoidable**.
-- **No React / Next.js / Node.js runtime** — the frontend remains intentionally thin.
+- **FastAPI route handlers + Jinja2** render the durable core application UI.
+- **HTML forms and links** are the default interaction model for filters, drill-downs, ingestion status, and LLM query forms.
+- **CSS** is the primary presentation technology.
+- **HTMX** is allowed only as declarative progressive enhancement for server-rendered partial page updates.
+- **No authored custom JavaScript or TypeScript** unless a future ADR documents a specific need.
+- **No React / Next.js / Node.js frontend runtime / SPA architecture** — the frontend remains intentionally thin and backend-owned.
+- **Streamlit (Python)** is reserved for internal experiments, research cockpit workflows, and analytical prototypes; it is not the durable patient/provider product shell.
 - **All authoritative logic remains in backend services and databases.**
 
-## Back-End
+## Back-End And Service Boundaries
 
 The backend is the **core application layer** of myHealth and contains the majority of system logic. It is responsible for enforcing application invariants, orchestrating data ingestion, coordinating inference workflows, and serving as the system-of-record boundary for all application state.
 
+The system is intentionally split around workload boundaries rather than around frontend pages. The first service boundaries are:
+
+- **Health Gateway Service**: user-facing FastAPI service responsible for authentication, server-rendered Jinja2 views, optional HTMX fragments, upload initiation, chat loops, retrieval requests, and ingestion status views.
+- **Clinical Ingestion Worker**: private containerized worker responsible for Apple Health XML parsing, clinical document parsing, PDF/OCR extraction, source validation, and normalized ingestion output. It has no public endpoints and does not serve user web requests.
+- **Telemetry Analytics Worker**: private or backend-managed worker responsible for normalizing daily telemetry entries, CPAP/sleep/recovery metrics, longitudinal feature generation, and dashboard/read-model refreshes.
+- **Genomic Annotation Worker**: private containerized worker responsible for VCF parsing, ClinVar-style datasets, molecular matrix parsing, coordinate mappings, and variant annotation. It has no public endpoints and can carry heavier bioinformatics dependencies than the gateway.
+
+The gateway should return fast responses and delegate long-running work through durable events. Parsing, OCR, telemetry feature generation, genomic annotation, indexing, analytics projection, and audit workflows run asynchronously.
+
 ### Application Services
 
-- **FastAPI (Python)** provides REST endpoints and orchestrates business logic, ingestion workflows, retrieval pipelines, and ML inference requests.
+- **FastAPI (Python)** provides REST endpoints, gateway behavior, and service APIs where synchronous service interfaces are required.
+- **SQS or equivalent message broker** decouples user-facing requests from ingestion, parsing, indexing, and analytical projection workflows.
+- **AWS Lambda** handles serverless edge ingest tasks such as S3 upload triggers, lightweight object validation, and event publication.
 - **Authorization and access control** are enforced within backend services rather than delegated to the frontend.
 - **Input validation and invariant enforcement** occur at API, service, and database boundaries.
 - **Backend-controlled state transitions** ensure ingestion events, user actions, and inference workflows remain durable and auditable.
 
 ### Ingestion and Processing Responsibilities
 
-The backend converts heterogeneous healthcare data into validated, queryable, and analytics-ready representations.
+Backend services convert heterogeneous healthcare data into validated, queryable, and analytics-ready representations.
 
-- **Wearable ingestion pipeline** parses exported Apple Health XML and normalizes it into relational schemas.
-- **Document ingestion pipeline** registers uploaded PDFs and clinical documents, tracks provenance, and coordinates parsing / extraction workflows.
+- **Wearable ingestion pipeline** parses exported Apple Health XML in the Clinical Ingestion Worker and normalizes it into relational schemas.
+- **Telemetry pipeline** stores user-entered behavior, CPAP, sleep,
+  recovery, and cognitive-performance signals as canonical operational
+  facts before deriving analytical features or dashboard projections.
+- **Document ingestion pipeline** registers uploaded PDFs and clinical documents, tracks provenance, and coordinates parsing / extraction workflows through asynchronous events.
 - **Genomic variant ingestion pipeline** parses ClinVar or synthetic genomic datasets (CSV/VCF) and stores variant annotations and provenance metadata for downstream interpretation.
-- **Background processing** manages scheduled ingestion, retries, partial failures, and asynchronous workflow coordination.
+- **Background processing** manages queued ingestion, retries, dead-letter handling, partial failures, and asynchronous workflow coordination.
 - **Transformation boundaries** separate raw intake data from validated operational data and downstream analytical models.
 
 ### Inference and Retrieval Responsibilities
@@ -147,6 +241,8 @@ The backend converts heterogeneous healthcare data into validated, queryable, an
 - **Retrieval integration** combines structured health data, document-derived context, and analytical outputs to support context-aware responses.
 - **Multimodal processing support** allows backend workflows to reason over both textual and document-derived image content.
 - **Model access control and auditability** are maintained by routing all inference calls through backend-managed services.
+- **Clinical inference restraint** ensures product LLMs only receive approved, pseudonymized, provenance-aware clinical context.
+- **Preclinical analytical autonomy** allows molecular and genomic workers to perform richer autonomous computation over public, synthetic, or pseudonymized datasets without becoming patient-facing medical guidance by default.
 
 ### Polyglot Persistence Strategy
 
@@ -156,6 +252,7 @@ Different classes of data require different storage models. myHealth intentional
   Primary relational database responsible for transactional correctness and long‑lived application state. It serves as the authoritative source of truth for operational data while also storing relational metadata used by downstream processing and retrieval layers.
   - user accounts
   - health record metadata
+  - telemetry source facts and daily recovery entries
   - permissions and authorization mappings
   - ingestion manifests
   - document metadata and provenance tracking
@@ -175,11 +272,24 @@ Different classes of data require different storage models. myHealth intentional
   Used for high-throughput, key-addressable operational state such as:
   - ingestion job checkpoints
   - idempotency keys for ingestion APIs
+  - cached idempotent responses where appropriate
   - async task and workflow state
   - chatbot session references
   - rate limiting counters
 
   This isolates ephemeral workflow coordination from relational application data.
+
+- **Redis (Read-Optimized Cache / Projection Store)**  
+  Used for fast query paths where the frontend needs low-latency,
+  repeatedly accessed state that does not need to hit canonical
+  PostgreSQL tables directly.
+  - dashboard-ready trend snapshots
+  - ingestion status projections
+  - live UI refresh state
+  - short-lived retrieval/session cache
+
+  Redis supports CQRS-style separation between command writes and read
+  models while PostgreSQL remains the source of truth.
 
 - **Google BigQuery (Analytical Warehouse)**  
   A downstream analytical layer used for:
@@ -205,30 +315,56 @@ Different classes of data require different storage models. myHealth intentional
 
 ```
 [Apple Health App]
-      ↓ Periodic "Export All Health Data" (.zip)
-[iCloud Drive / Local Sync Folder]
-      ↓ Scheduled Ingestion (cron / background worker)
-[FastAPI Ingestion Service]
-      ↓ Parse XML + Normalize
+      ↓ Export All Health Data (.zip)
+[Health Gateway Service]
+      ↓ Create Manifest + Pre-signed Upload URL
+[S3 Raw Object Storage]
+      ↓ S3 Event
+[Lambda Edge Ingest Validator]
+      ↓ Publish BiometricFileUploaded
+[SQS Ingestion Queue]
+      ↓ Consume Task
+[Clinical Ingestion Worker]
+      ↓ Parse XML + Normalize + Validate
 [PostgreSQL (System of Record)]
       ↓
-[DynamoDB (Operational Workflow State)]
+[DynamoDB (Idempotency + Workflow State)]
+      ↓
+[Redis Read Projection]
       ↓
 [dbt Transformations → BigQuery (Analytical Data Warehouse)]
       ↓
 [Health Insights + Dashboards]
 ```
 
+### Personal Telemetry → Recovery Analytics
+
+```
+[Daily Behavior / CPAP / Recovery / Cognitive Inputs]
+      ↓ Server-rendered Forms or File/API Imports
+[Health Gateway Service]
+      ↓ Validate + Persist Source Facts
+[PostgreSQL Telemetry Records]
+      ↓ Publish TelemetryUpdated
+[Telemetry Analytics Worker]
+      ↓ Feature Generation + Trend Models
+[Redis Read Projection / BigQuery Analytical Models]
+      ↓
+[Recovery Dashboard + Correlation / Prediction Views]
+```
+
 ### External Documents / Laboratory Data → Multimodal AI Pipeline
 
 ```
 [PDFs / Lab Reports / External Clinical Documents]
-      ↓ Upload / Secure Intake
+      ↓ Pre-signed Upload
 [S3 Raw Document Storage]
-      ↓ Metadata Registration + Provenance Tracking
-[PostgreSQL Document Index]
+      ↓ S3 Event + Lambda Validation
+[SQS Document Ingestion Queue]
+      ↓
+[Clinical Ingestion Worker]
       ↓ Parsing / OCR / Table Extraction
-[Multimodal Ingestion Pipeline]
+[PostgreSQL Document Index + Provenance]
       ↓
 [Structured Lab Data → PostgreSQL]
       ↓
@@ -241,14 +377,32 @@ Different classes of data require different storage models. myHealth intentional
 
 Genomic variant datasets (e.g., ClinVar) follow a similar ingestion path but are processed through a specialized genomic ingestion service that parses variant files, stores variant annotations in PostgreSQL, and enables downstream interpretation or explanation through the inference layer.
 
+### Genomic / Molecular Payload → Annotation Pipeline
+
+```
+[VCF / ClinVar CSV / Molecular Matrix]
+      ↓ Pre-signed Upload
+[S3 Raw Vault]
+      ↓ S3 Event + Lambda Validation
+[SQS Genomic Ingestion Queue]
+      ↓
+[Genomic Annotation Worker]
+      ↓ Parse + Annotate + Normalize
+[PostgreSQL Variant / Molecular Records]
+      ↓
+[BigQuery / Parquet Analytical Models]
+      ↓
+[Retrieval + Inference Context]
+```
+
 ### User Query → Insight
 
 ```
 [User Prompt]
       ↓
-[Streamlit / HTML UI]
+[Server-rendered HTML UI]
       ↓
-[FastAPI Backend]
+[Health Gateway Service]
       ↓
 [Vector Retrieval / ML Inference]
       ↓

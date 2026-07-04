@@ -25,6 +25,8 @@ is designed to preserve independent of any single feature.
 ## Data Integrity
 
 - canonical health records must preserve source provenance
+- telemetry entries must distinguish raw source facts from derived
+  recovery scores, correlations, predictions, and dashboard summaries
 - units, timestamps, and source identifiers must be normalized
   deterministically
 - validation failures must be surfaced without silently dropping data
@@ -41,6 +43,8 @@ is designed to preserve independent of any single feature.
 ## Performance
 
 - ingestion should support batching where safe
+- telemetry analytics should support incremental refreshes so daily
+  source-fact entry does not require recomputing all historical models
 - large document processing should be asynchronous
 - analytical queries must not compete with operational writes on the
   same path
