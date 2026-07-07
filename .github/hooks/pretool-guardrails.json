@@ -1,0 +1,11 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "type": "command",
+        "command": "./scripts/hooks/pre_tool_guardrails.sh",
+        "timeout": 20
+      }
+    ]
+  }
+}
