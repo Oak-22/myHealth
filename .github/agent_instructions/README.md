@@ -1,47 +1,27 @@
-# Agent Instructions
+# Legacy Agent Instructions
 
-Routing: Read this index fully to understand the instruction layer model and choose relevant global or repo files.
+Routing: Read this index only for compatibility with older local
+workflows that still reference `.github/agent_instructions/`.
 
-This directory contains instruction assets that support disciplined
-AI-human collaboration in this repository.
-
-## Layer Model
-
-- `agent.md`
-  General AI agent working principles.
-- `global/`
-  Ignored local symlink to reusable guidance shared across local
-  repositories.
-- `repo/`
-  Repository-specific context, boundaries, and operating constraints.
-
-`agent.md` defines general collaboration behavior. Global guidance
-supplies default decision rules when the local symlink exists. Repo
-guidance supplies local facts and constraints that shape or override
-those defaults.
-
-## Active Instruction Tree
-
-This is the active instruction tree for `myHealth`.
-
-`.github/agent_instructions/global` should be a local symlink to:
+This directory is retained as a legacy compatibility path. The active
+checked-in instruction namespace is now:
 
 ```text
-/Users/julianbuccat/.config/agent_instructions/global
+.github/copilot-instructions.md
+  -> .github/instructions/*.instructions.md
+  -> .github/agents/*.agent.md
 ```
 
-That symlink is intentionally ignored so the public repository does not
-depend on a machine-specific path.
+Do not add new canonical instructions here. Migrate durable repository
+rules into `.github/instructions/*.instructions.md` and specialist
+personas into `.github/agents/*.agent.md`.
 
-The older `.github/agent-instructions/` path and the
-`templates/ai-human-workflow/` scaffold are not active instruction
-sources.
+Optional local overlays may still exist here during transition:
 
-## Usage
+```text
+.github/agent_instructions/global
+.github/agent_instructions/repo/local.md
+```
 
-Start here, then load only the instruction files relevant to the task.
-Use each file's `Routing:` sentence as the first-pass trigger for
-whether the full file should enter context.
-
-For architecture, ingestion, privacy, data-contract, or worker-boundary
-work, load the repo files listed in `.github/agent_instructions/repo/`.
+These paths are ignored and non-canonical. Repository work must remain
+safe when they are absent.
