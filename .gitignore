@@ -5,4 +5,5 @@
 knowledge_base/
 .github/agent_instructions/global
 .github/agent_instructions/repo/local.md
+.github/local/
 engineering_knowledge_base
