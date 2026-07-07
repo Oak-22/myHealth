@@ -59,11 +59,9 @@ relevant idea is promoted into `docs/architecture/`, `docs/contracts/`,
 
 ## Current Local Overlay Themes
 
-- `agent-control-plane-convergence.instructions.md`
-  Captures how the repository's agent context evolved from a custom
-  AI-human workflow scaffold into a modern artifact-typed control plane
-  with instructions, agents, prompts, skills, hooks, project overlays,
-  and private learning capture.
+- `agent-control-plane-convergence` was promoted out of local overlays
+  as a dedicated external case study:
+  `ai_human_engineering_collaboration_case_studies_and_best_practices/case_study_03_agent_control_plane_convergence.md`
 - `clever-hans.instructions.md`
   Mechanistic-interpretability-inspired guidance for avoiding
   shortcut-learning failures in BioML-style agent systems. In this
