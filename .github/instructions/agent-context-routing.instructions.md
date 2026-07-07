@@ -37,13 +37,6 @@ This baseline supports lean-context operation and requires a pre-plan
 split-chat check when the next request appears unrelated to the active
 thread.
 
-## Legacy Compatibility Path
-
-`.github/agent_instructions/` is retained as a compatibility shim for
-older local workflows. Do not add new canonical instructions there.
-When content needs to become active, migrate it into
-`.github/instructions/*.instructions.md`.
-
 ## Public Vs Local Guidance
 
 Checked-in files must be portable and safe for the public repository.
@@ -53,9 +46,6 @@ machine-specific paths.
 Allowed optional local overlays:
 
 - `.github/local/overlays/*.instructions.md`
-- `.github/agent_instructions/repo/local.md` during legacy transition
-- `.github/agent_instructions/global` as an ignored local symlink during
-  legacy transition
 
 Agents may load local overlays when present and relevant. Repository
 work must remain safe when they are absent. Local overlays may be

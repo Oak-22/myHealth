@@ -62,21 +62,12 @@ Local overlays are optional, ignored, and non-canonical:
 
 ```text
 .github/local/overlays/*.instructions.md
-.github/agent_instructions/repo/local.md
-.github/agent_instructions/global
 ```
 
 Load local overlays only when present and relevant. They may shape local
 workflow behavior, but they must not define product requirements,
 architecture decisions, PHI policy, ingestion contracts, or runtime
 behavior.
-
-## Legacy Compatibility
-
-`.github/agent_instructions/` is retained as a legacy compatibility
-path. Do not add new canonical instructions there. Prefer
-`.github/instructions/*.instructions.md` for durable checked-in rules and
-`.github/agents/*.agent.md` for specialist personas.
 
 ## Source Of Truth
 
