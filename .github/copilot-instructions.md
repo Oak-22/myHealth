@@ -1,65 +1,94 @@
 # Copilot Instructions
 
-Routing: GitHub Copilot should read this file fully before repo changes to converge on the shared instruction tree and report loaded files.
-
-This is the checked-in discovery adapter for the repository instruction
-system. The repo intentionally does not expose a root-level `AGENTS.md`
-entrypoint because this project has privacy-sensitive clinical and
-preclinical boundaries.
+This is the checked-in discovery adapter for repository-aware agents in
+`myHealth`.
 
 Before making code, documentation, data-layout, architecture, or Git
-changes, load the `.github/agent_instructions/` tree and report what was
-loaded.
+changes, load the relevant checked-in instruction files and report what
+was loaded. Keep the report to operational file paths and routing
+reasons; do not expose private reasoning.
 
-## Discovery Path
+## Active Context Surface
 
 ```text
 .github/copilot-instructions.md
-  -> .github/agent_instructions/agent.md
-  -> .github/agent_instructions/README.md
-  -> .github/agent_instructions/global/README.md
-  -> .github/agent_instructions/repo/README.md
-  -> task-relevant instruction files
+  -> .github/instructions/*.instructions.md
+  -> .github/agents/*.agent.md when a specialist role is relevant
+  -> .github/prompts/*.prompt.md when an explicit reusable prompt fits
+  -> .github/skills/*/SKILL.md when an explicit skill workflow fits
 ```
 
-## Required Load Sequence
+## Required Baseline
 
-1. Read `.github/agent_instructions/agent.md`.
-2. Read `.github/agent_instructions/README.md`.
-3. Read `.github/agent_instructions/global/README.md` when the local
-   symlink exists.
-4. Read `.github/agent_instructions/repo/README.md`.
-5. Read task-relevant files referenced by those indexes.
+For repository work, load only the task-relevant files under
+`.github/instructions/`.
 
-## Routing Sentences
+Always include `.github/instructions/token-economics.instructions.md`
+for repository tasks so agents apply session-efficiency behavior.
 
-Instruction files may begin with a `Routing:` sentence. Use that
-sentence to decide which optional task-relevant files need full loading;
-the required load sequence above still applies before repository
-changes.
+Common routing:
 
-## Required First Response Block
+- Python, tests, service modules, or ingestion-adjacent implementation:
+  `.github/instructions/myhealth-python.instructions.md`
+- Architecture, stack, service boundaries, or system docs:
+  `.github/instructions/myhealth-context.instructions.md`
+- PHI/PII, prompts, logs, audit flows, inference context, queue payloads,
+  or persistence surfaces:
+  `.github/instructions/privacy-and-compliance.instructions.md`
+- Upload registration, object references, queue events, idempotency,
+  parser strategies, ingestion workers, or ingestion docs:
+  `.github/instructions/ingestion-contracts.instructions.md`
+- Token-cost control, context compaction, model-size selection, or
+  session-splitting behavior:
+  `.github/instructions/token-economics.instructions.md`
+- Agent instructions, prompts, skills, templates, workflow scaffolds, or
+  public/private context layering:
+  `.github/instructions/agent-context-routing.instructions.md`
+- Project overlay notes, promotable design framing, or possible future
+  ADR/architecture/contract material:
+  `docs/notes/README.md` and, when present, relevant local overlays
+  under `.github/local/overlays/implementation-overlays/`
 
-Start change-making turns with an instruction load report:
+## Specialist Agents
 
-```md
-Instruction Load Report
+Specialist personas live in `.github/agents/*.agent.md`. Use them when
+the task naturally calls for a role such as architecture stewardship,
+data engineering, testing, compliance, security, documentation curation,
+or risk-first code review.
 
-- [x] `.github/agent_instructions/agent.md`
-- [x] `.github/agent_instructions/README.md`
-- [x] `.github/agent_instructions/global/README.md` (Local symlink, when present)
-- [x] `.github/agent_instructions/repo/README.md`
-- [x] `path/to/relevant-instruction.md` (Trigger: brief reason)
-- [ ] `path/to/skipped-instruction.md` (Skipped: brief reason)
+## Local Overlays
+
+Local overlays are optional, ignored, and non-canonical:
+
+```text
+.github/local/overlays/*.instructions.md
+.github/agent_instructions/repo/local.md
+.github/agent_instructions/global
 ```
 
-If repo instruction files cannot be read, say which files were
-unavailable and continue only when the task can still be handled safely.
-If the local global symlink is absent, report it as skipped and continue
-with the checked-in repo instructions.
+Load local overlays only when present and relevant. They may shape local
+workflow behavior, but they must not define product requirements,
+architecture decisions, PHI policy, ingestion contracts, or runtime
+behavior.
 
-## Audit Boundary
+## Legacy Compatibility
 
-The load report is an operational audit artifact. It should list files
-read for the task, not expose hidden chain-of-thought or private
-reasoning.
+`.github/agent_instructions/` is retained as a legacy compatibility
+path. Do not add new canonical instructions there. Prefer
+`.github/instructions/*.instructions.md` for durable checked-in rules and
+`.github/agents/*.agent.md` for specialist personas.
+
+## Source Of Truth
+
+Canonical product truth remains in:
+
+- `docs/architecture/`
+- `docs/contracts/`
+- `docs/adr/`
+- service-level code and tests
+
+Project overlay notes may live as gitignored local overlays. In that
+location, they are already promoted local agent-control material. They
+remain non-canonical from the repository/product perspective until
+promoted into one of the canonical documentation layers, checked-in
+agent instructions, or code/tests.
