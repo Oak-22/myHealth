@@ -1,0 +1,11 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "type": "command",
+        "command": "./scripts/hooks/stop_session_gate.sh",
+        "timeout": 240
+      }
+    ]
+  }
+}
