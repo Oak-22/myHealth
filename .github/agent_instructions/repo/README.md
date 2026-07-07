@@ -1,48 +1,18 @@
-# Repository Instructions
+# Legacy Repository Instructions
 
-Routing: Read this file fully for work inside `myHealth` where local architecture, privacy boundaries, ingestion contracts, or agent-control workflow matter.
+Routing: Read this file only when a workflow still references the legacy
+`.github/agent_instructions/repo/` path.
 
-This directory holds repository-specific guidance for AI-human
-collaboration in `myHealth`.
+Repository-specific instruction content has moved to:
 
-## Current Focus
+- `.github/instructions/myhealth-context.instructions.md`
+- `.github/instructions/privacy-and-compliance.instructions.md`
+- `.github/instructions/ingestion-contracts.instructions.md`
+- `.github/instructions/agent-context-routing.instructions.md`
 
-`myHealth` is evolving into a backend-centric, event-driven health data
-platform with storage-first ingestion and private worker isolation for
-clinical, pre-clinical molecular, and genomic payloads.
+Keep this directory as a compatibility shim while older tooling catches
+up. Do not add new canonical repository rules here.
 
-## Current Files
+Optional ignored local overlay:
 
-- `myhealth-context.md`
-  Project context, architecture direction, stack, and source-of-truth
-  links.
-- `privacy-and-phi-boundary.md`
-  Privacy, PHI/PII, pseudonymization, and inference boundary rules.
-- `ingestion-contracts.md`
-  Agent rules for storage-first ingestion, idempotency, event schemas,
-  parser strategies, and worker boundaries.
-- `control-plan.md`
-  Instruction-control plan for canonical paths, template redundancy,
-  public/private instruction layering, and implementation expectations.
-
-## Task Routing
-
-- Architecture, stack, ADR, or service-boundary changes:
-  load `myhealth-context.md` and `control-plan.md`.
-- Ingestion, S3, queue, idempotency, parser, worker, contract, or test
-  changes: load `ingestion-contracts.md`.
-- PHI, prompts, inference, logging, audit, observability, or test-data
-  changes: load `privacy-and-phi-boundary.md`.
-
-## Repo-Specific Guidance
-
-- Keep frontend behavior thin; backend services own state transitions.
-- Use the locked UI stack: FastAPI + Jinja2 + HTML/CSS, with HTMX only
-  as optional progressive enhancement and no custom JS/TS.
-- Treat ingestion manifests, event schemas, idempotency keys, and parser
-  strategies as first-class contracts.
-- Prefer pseudonymous subject references in examples and tests.
-- Avoid logging raw clinical identifiers, file contents, or source PHI.
-- Keep public docs and checked-in instructions independent of private
-  local config paths.
-- Prefer relative links for repo-internal references.
+- `.github/agent_instructions/repo/local.md`
