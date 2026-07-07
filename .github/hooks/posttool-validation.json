@@ -1,0 +1,11 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "type": "command",
+        "command": "./scripts/hooks/post_tool_validate.sh",
+        "timeout": 180
+      }
+    ]
+  }
+}
