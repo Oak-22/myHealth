@@ -28,8 +28,6 @@ for repository tasks so agents apply session-efficiency behavior.
 
 Common routing:
 
-- Python, tests, service modules, or ingestion-adjacent implementation:
-  `.github/instructions/myhealth-python.instructions.md`
 - Architecture, stack, service boundaries, or system docs:
   `.github/instructions/myhealth-context.instructions.md`
 - PHI/PII, prompts, logs, audit flows, inference context, queue payloads,
@@ -44,6 +42,9 @@ Common routing:
 - Agent instructions, prompts, skills, templates, workflow scaffolds, or
   public/private context layering:
   `.github/instructions/agent-context-routing.instructions.md`
+- Spec-driven development, RPI workflows, feature/task planning, or
+  harness-template decisions:
+  `.github/instructions/spec-driven-rpi.instructions.md`
 - Project overlay notes, promotable design framing, or possible future
   ADR/architecture/contract material:
   `docs/notes/README.md` and, when present, relevant local overlays
@@ -76,7 +77,7 @@ Canonical product truth remains in:
 - `docs/architecture/`
 - `docs/contracts/`
 - `docs/adr/`
-- service-level code and tests
+- checked-in agent harness artifacts
 
 Project overlay notes may live as gitignored local overlays. In that
 location, they are already promoted local agent-control material. They

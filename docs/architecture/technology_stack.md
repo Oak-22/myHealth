@@ -2,27 +2,35 @@
 
 ## Purpose
 
-This document lists the major technologies used across `myHealth` so
-the implementation surface is easy to scan without overloading the
-architecture and specification documents.
+This document records the current technology posture for `myHealth`.
+Under ADR 0010, the repository is a harness evaluation target rather
+than an active product implementation. Product language and framework
+choices are deferred until the agentic harness/control-plane and
+AgentOps token-economics foundations are ready.
 
-## Frontend And Delivery Layer
+## Active Technology Surface
 
-- FastAPI route handlers for core application views
-- Jinja2 server-side templates
-- HTML forms and links as the default interaction model
-- CSS for presentation
-- HTMX only as declarative progressive enhancement for server-rendered
-  partial page updates
-- no authored custom JavaScript or TypeScript
-- no React, Next.js, Node.js frontend runtime, or SPA architecture
-- Streamlit for internal experiments, research cockpit workflows, and
-  analytical prototypes only
+- GitHub repository instructions, agents, prompts, skills, and hook
+  configuration
+- shell hook scripts under `scripts/hooks/`
+- architecture, contract, ADR, product, data, and notes documentation
+- Mermaid diagrams embedded in markdown
 
-## Backend Application Layer
+## Deferred Product Stack
 
-- Python
-- FastAPI for the Health Gateway Service and service-facing APIs
+Historical ADRs and architecture docs still describe a backend-centric
+health platform using AWS-managed infrastructure, event-driven
+ingestion, retrieval, and privacy boundaries. Those remain product
+intent, not active implementation commitments.
+
+The following categories are deferred until product development resumes:
+
+- application programming language
+- web framework
+- UI rendering framework
+- test framework
+- package manager and runtime
+- deployment packaging
 
 ## Service Boundaries
 
@@ -91,8 +99,8 @@ architecture and specification documents.
 
 - AWS Bedrock for embedding and generation models
 - PostgreSQL with pgvector for vector storage and similarity search
-- Python retrieval and prompt orchestration inside the Health Gateway
-  Service and supporting backend services
+- retrieval and prompt orchestration inside future backend-managed
+  services
 - document chunking and provenance-aware context assembly in
   application-managed ingestion and retrieval workflows
 

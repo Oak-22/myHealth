@@ -1,6 +1,5 @@
 ---
-description: "Use for token-cost control, context compaction, model-size choice, and session-splitting decisions before planning or implementation."
-applyTo: "src/**/*.py, tests/**/*.py, docs/**/*.md, .github/**/*.md"
+description: "Always load for repository tasks so agents apply token-cost control, context compaction, model-size choice, and session-splitting behavior before planning or implementation."
 ---
 # Token Economics
 
@@ -8,6 +7,10 @@ applyTo: "src/**/*.py, tests/**/*.py, docs/**/*.md, .github/**/*.md"
 
 Define durable agent behavior for controlling token cost and reducing
 throwaway work during repository tasks.
+
+This instruction is intentionally always-on for repository work. Do not
+scope it to specific file globs; session efficiency and context hygiene
+apply before deciding which files are relevant.
 
 ## Always-On Cost Levers
 

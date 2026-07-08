@@ -13,24 +13,20 @@ run_check() {
   failures+=("$label")
 }
 
-if command -v pytest >/dev/null 2>&1; then
-  run_check "pytest ingestion contracts" pytest -q tests/test_ingestion_contracts.py
-else
-  skips+=("pytest")
-fi
+for hook in scripts/hooks/*.sh; do
+  run_check "bash syntax $hook" bash -n "$hook"
+done
 
-if command -v bandit >/dev/null 2>&1; then
-  run_check "bandit" bandit -q -r src/myhealth
-else
-  skips+=("bandit")
-fi
+for hook_config in .github/hooks/*.json; do
+  run_check "hook json $hook_config" python3 -m json.tool "$hook_config" >/dev/null
+done
 
 if [ ${#failures[@]} -eq 0 ] && [ ${#skips[@]} -eq 0 ]; then
   echo '{"continue": true}'
   exit 0
 fi
 
-msg="Session-end soft gate summary"
+msg="Session-end harness soft gate summary"
 if [ ${#failures[@]} -gt 0 ]; then
   msg+="; failed: ${failures[*]}"
 fi

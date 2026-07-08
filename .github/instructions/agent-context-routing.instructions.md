@@ -26,6 +26,23 @@ architecture, especially privacy and domain-boundary rules.
 - `.github/skills/*/SKILL.md`
   Task-specific workflows.
 
+## Spec-Driven RPI Layer
+
+Use `.github/instructions/spec-driven-rpi.instructions.md` when work
+needs a Research-Plan-Implement loop, feature/task planning, or a
+decision about whether a generated artifact should become durable.
+
+The RPI mapping is:
+
+- Ask -> Research
+- Plan -> Plan
+- Agent -> Implement
+
+Spec-inspired working artifacts should promote durable content into the
+existing source-of-truth layers rather than creating parallel docs.
+Temporary research, plans, and transcripts should remain local unless
+they become review evidence or canonical guidance.
+
 ## Token-Efficiency Baseline
 
 The checked-in token-economics instruction is part of the durable agent
@@ -93,7 +110,10 @@ promoted into one of the durable checked-in layers:
 - `docs/architecture/` for system shape and service boundaries
 - `docs/contracts/` for integration behavior and data/state contracts
 - `.github/instructions/` for repeatable agent behavior
-- code/tests for implemented behavior
+- checked-in hook scripts and future tests for implemented harness or
+  product behavior
+- `docs/architecture/agentic_harnessing_framework.md` for the
+  feedforward/feedback model that governs agentic development posture
 
 ## Maintenance Rules
 

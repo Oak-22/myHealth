@@ -3,6 +3,11 @@
 ## Overview
 The myHealth platform is a **personal health data and inference system** designed to ingest heterogeneous health data sources and enable retrieval‑augmented reasoning over longitudinal health records. The system unifies wearable data, laboratory exports, clinical documents, genomic datasets, and external health APIs into a normalized backend platform capable of analytics, semantic retrieval, and LLM‑assisted interpretation.
 
+Current repository mode: under ADR 0010, this repository is a harness
+evaluation target. The architecture below records product intent and
+future implementation direction; it is not evidence that product source
+code is currently present.
+
 Rather than functioning as a traditional application where most logic lives in the UI, myHealth is architected as a **backend‑centric, event-driven health data platform**. The frontend acts primarily as a thin delivery layer while backend services handle ingestion pipelines, data normalization, inference orchestration, and analytical processing.
 
 Key architectural priorities include:

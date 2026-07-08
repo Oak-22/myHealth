@@ -41,42 +41,20 @@ run_check() {
   failures+=("$label")
 }
 
-if command -v ruff >/dev/null 2>&1; then
-  run_check "ruff check" ruff check src tests
-else
-  skips+=("ruff")
-fi
+for hook in scripts/hooks/*.sh; do
+  run_check "bash syntax $hook" bash -n "$hook"
+done
 
-if command -v mypy >/dev/null 2>&1; then
-  run_check "mypy" mypy src
-else
-  skips+=("mypy")
-fi
-
-if command -v pytest >/dev/null 2>&1; then
-  run_check "pytest ingestion contracts" pytest -q tests/test_ingestion_contracts.py
-else
-  skips+=("pytest")
-fi
-
-if command -v bandit >/dev/null 2>&1; then
-  run_check "bandit" bandit -q -r src/myhealth
-else
-  skips+=("bandit")
-fi
-
-if command -v pip-audit >/dev/null 2>&1; then
-  run_check "pip-audit" pip-audit
-else
-  skips+=("pip-audit")
-fi
+for hook_config in .github/hooks/*.json; do
+  run_check "hook json $hook_config" python3 -m json.tool "$hook_config" >/dev/null
+done
 
 if [ ${#failures[@]} -eq 0 ] && [ ${#skips[@]} -eq 0 ]; then
   echo '{"continue": true}'
   exit 0
 fi
 
-msg="Soft-fail validation summary"
+msg="Harness soft-fail validation summary"
 if [ ${#failures[@]} -gt 0 ]; then
   msg+="; failed: ${failures[*]}"
 fi

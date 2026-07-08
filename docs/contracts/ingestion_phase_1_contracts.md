@@ -30,13 +30,12 @@ object vault.
       ↓ parse only after idempotency and manifest checks
 ```
 
-## Implemented Contract Modules
+## Current Repository Mode
 
-- [schemas.py](/Users/julianbuccat/Projects/dev/myHealth/src/myhealth/ingestion/schemas.py): canonical dataclasses and enums for manifests, uploads, storage references, task events, parser context, normalized batches, and processing results.
-- [ports.py](/Users/julianbuccat/Projects/dev/myHealth/src/myhealth/ingestion/ports.py): abstract interfaces for object storage, idempotency, manifest persistence, and event publication.
-- [registration.py](/Users/julianbuccat/Projects/dev/myHealth/src/myhealth/ingestion/registration.py): gateway-side registration use case that creates the transaction before upload/parsing.
-- [strategies.py](/Users/julianbuccat/Projects/dev/myHealth/src/myhealth/ingestion/strategies.py): parser strategy interface and registry for XML, CSV, FHIR JSON, PDF/OCR, VCF, and molecular matrix parsers.
-- [events.py](/Users/julianbuccat/Projects/dev/myHealth/src/myhealth/ingestion/events.py): task-event construction helpers for S3/Lambda-to-queue boundaries.
+Under ADR 0010, `myHealth` is currently a harness evaluation target.
+Product source code and implementation tests are intentionally absent.
+This contract remains as source-of-truth design material for future
+implementation and for harness-evaluation specimens.
 
 ## Main Schemas
 
@@ -111,16 +110,13 @@ This phase does not implement AWS clients, real S3 uploads, real SQS
 publication, DynamoDB persistence, OCR, VCF parsing, or PostgreSQL
 writes. It defines the contracts those implementations must satisfy.
 
-## Verification
+## Future Verification Expectations
 
-Current tests validate that:
+When product implementation resumes, focused tests should validate that:
 
 - upload registration creates a transaction before parsing
 - duplicate registration returns an idempotency replay decision
 - object-created events carry the worker contract
 
-Run:
-
-```bash
-PYTHONPATH=src python3 -m unittest discover -s tests -v
-```
+Until then, repository validation focuses on harness integrity, ADR
+alignment, and contract clarity.

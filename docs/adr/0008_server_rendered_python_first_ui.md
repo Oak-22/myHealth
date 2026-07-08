@@ -2,7 +2,8 @@
 
 ## Status
 
-Accepted
+Superseded for active implementation by ADR 0010; retained as
+historical product-intent context.
 
 ## Context
 

@@ -1,6 +1,6 @@
 ---
 description: "Use when touching PHI/PII boundaries, prompts, logs, audit flows, inference context, queue payloads, or persistence surfaces."
-applyTo: "src/**/*.py, docs/**/*.md, tests/**/*.py"
+applyTo: "docs/**/*.md, .github/**/*.md, scripts/hooks/**/*.sh"
 ---
 # Privacy and Compliance Guardrails
 
@@ -9,7 +9,8 @@ treated as an afterthought at prompt time.
 
 - Do not add logging that includes names, direct identifiers, raw payload bytes, or sensitive source content.
 - Queue payloads should carry references and metadata, not raw clinical payload data.
-- Use pseudonymous subject references in docs, tests, and code comments.
+- Use pseudonymous subject references in docs, evaluation specimens, and
+  future code comments.
 - Treat privacy boundary changes as architectural changes and align docs when behavior changes.
 - Preserve the distinction between development-agent customization and product inference controls.
 - Pseudonymization and structural transformation should happen before

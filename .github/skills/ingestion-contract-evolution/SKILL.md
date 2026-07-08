@@ -1,6 +1,6 @@
 ---
 name: ingestion-contract-evolution
-description: "Evolve ingestion contracts safely. Use when changing schemas, events, idempotency behavior, parser strategy routing, or ingestion tests."
+description: "Evolve ingestion contracts safely. Use when changing documented schemas, events, idempotency behavior, parser strategy routing, or future test expectations."
 argument-hint: "Describe the contract change and affected payload types"
 ---
 # Ingestion Contract Evolution
@@ -8,17 +8,16 @@ argument-hint: "Describe the contract change and affected payload types"
 ## When to use
 - You are adding or modifying ingestion schema fields.
 - You are changing registration, event emission, idempotency keys, or strategy routing.
-- You need compatibility checks and focused tests before merge.
+- You need compatibility checks or future test expectations before merge.
 
 ## Procedure
-1. Identify affected contracts under src/myhealth/ingestion.
-2. Implement additive and explicit contract updates.
-3. Update tests under tests/test_ingestion_contracts.py.
-4. Update docs/contracts/ingestion_phase_1_contracts.md if behavior changed.
+1. Identify affected documented contracts under docs/contracts.
+2. Make additive and explicit contract updates.
+3. Capture future implementation and test expectations in the contract doc.
+4. Update related ADRs or architecture docs if behavior changed.
 5. Run focused checks:
-   - pytest -q tests/test_ingestion_contracts.py
-   - ruff check src tests
-   - mypy src
+   - git diff --check
+   - bash -n scripts/hooks/*.sh
 
 ## Output format
 - Contract delta summary

@@ -2,13 +2,15 @@
 set -euo pipefail
 
 payload="$(cat)"
+export HOOK_PAYLOAD="$payload"
 
-python3 - <<'PY' <<<"$payload"
+python3 - <<'PY'
 import json
+import os
 import re
 import sys
 
-raw = sys.stdin.read().strip()
+raw = os.environ.get("HOOK_PAYLOAD", "").strip()
 if not raw:
     print(json.dumps({"hookSpecificOutput": {"hookEventName": "PreToolUse", "permissionDecision": "allow"}}))
     raise SystemExit(0)

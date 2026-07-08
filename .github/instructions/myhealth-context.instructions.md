@@ -1,17 +1,22 @@
 ---
-description: "Use for myHealth architecture, stack, service-boundary, documentation, or implementation work."
-applyTo: "src/**/*.py, docs/**/*.md, tests/**/*.py, .github/**/*.md"
+description: "Use for myHealth architecture, stack, service-boundary, documentation, harness-evaluation, or future implementation planning work."
+applyTo: "docs/**/*.md, .github/**/*.md, scripts/hooks/**/*.sh"
 ---
 # myHealth Context
 
 `myHealth` is a backend-centric, event-driven personal health data and
-inference platform with a dual-domain governance model.
+inference platform concept with a dual-domain governance model.
+
+Current repository mode: harness evaluation target. Product
+implementation code is intentionally absent until ADR 0009 and ADR 0010
+readiness criteria are satisfied or explicitly amended.
 
 ## Architectural Direction
 
-- Backend-managed services are authoritative; the frontend is a thin
-  delivery layer.
-- FastAPI is the primary Python service framework.
+- Backend-managed services remain the intended authoritative boundary;
+  the frontend remains a thin delivery layer concept.
+- Active implementation language and framework choices are deferred
+  while the repository is used as a harness evaluation target.
 - The active distributed direction is defined by ADR 0006:
   event-driven service isolation for learning architecture.
 - The first service boundaries are the Health Gateway Service, Clinical
@@ -36,15 +41,16 @@ inference platform with a dual-domain governance model.
 - Observability, auditability, and operational correctness.
 - Clear separation between product LLM inference controls and
   development-agent instruction scaffolding.
+- Current sequencing: postpone substantial product implementation until
+  the agentic harness/control-plane foundation and AgentOps
+  token-economics observability foundation are solid enough to support
+  repeatable, observable agent-assisted development. See ADR 0009.
 
 ## Stack Direction
 
-- FastAPI, Jinja2, HTML forms/links, CSS, and optional HTMX for
-  server-rendered partial updates.
-- No authored custom JavaScript or TypeScript, React, Next.js, Node.js
-  frontend runtime, or SPA architecture.
-- Streamlit only for internal experiments, analytical prototypes, and
-  research cockpit workflows.
+- No active product implementation stack is currently present.
+- Historical stack ADRs remain useful as product intent, but they are
+  deferred by ADR 0010 until product implementation resumes.
 - Amazon S3 for raw object vault storage.
 - AWS Lambda for lightweight edge ingest validation and event
   publication.
@@ -68,4 +74,6 @@ Use these canonical docs for deeper system details:
 - [ADR 0006](../../docs/adr/0006_event_driven_service_isolation.md)
 - [ADR 0007](../../docs/adr/0007_dual_domain_governance.md)
 - [ADR 0008](../../docs/adr/0008_server_rendered_python_first_ui.md)
+- [ADR 0009](../../docs/adr/0009_sequence_myhealth_after_agentic_foundation.md)
+- [ADR 0010](../../docs/adr/0010_convert_myhealth_to_harness_evaluation_target.md)
 - [Ingestion Phase 1 Contracts](../../docs/contracts/ingestion_phase_1_contracts.md)

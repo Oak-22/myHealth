@@ -15,14 +15,14 @@ myHealth delivers:
 - **Dual-domain architecture** that keeps clinical workflows restrained
   and privacy-first while allowing more autonomous preclinical molecular
   and genomic computation in isolated worker boundaries.
-- **Python-first server-rendered UI** using FastAPI, Jinja2, HTML/CSS,
-  and optional HTMX progressive enhancement without custom JS/TS or SPA
-  frameworks.
+- **Harness evaluation target mode** while the agentic control-plane and
+  AgentOps token-economics foundations mature.
 
 ## Differentiation
 - **Privacy by design**: PHI never embedded directly; redaction and pseudonymization before storage.
 - **Hybrid data flows**: Wearables → Cloud Storage → Cloud DWH → Secure LLM inference.
-- **Scalability path**: MVP runs on Fargate + FastAPI; roadmap includes Kubernetes for multi-tenant deployments.
+- **Scalability path**: product implementation is deferred until the
+  enabling harness and observability layers are ready.
 
 ## Target Users
 - **Patients**: Daily health insights, triage support,
@@ -44,6 +44,7 @@ Recommended starting points:
 - [PRD](docs/product/prd.md)
 - [System Architecture](docs/architecture/system_architecture.md)
 - [System Spec](docs/architecture/system_spec.md)
+- [Agentic Harnessing Framework](docs/architecture/agentic_harnessing_framework.md)
 - [Technology Stack](docs/architecture/technology_stack.md)
 - [Software Design Patterns Reference](docs/notes/software_design_patterns.md)
 - [Non-Functional Requirements](docs/architecture/non_functional_requirements.md)
@@ -56,3 +57,5 @@ Recommended starting points:
   - [ADR 0006: Event-Driven Service Isolation](docs/adr/0006_event_driven_service_isolation.md)
   - [ADR 0007: Dual-Domain Governance](docs/adr/0007_dual_domain_governance.md)
   - [ADR 0008: Python-First Server-Rendered UI](docs/adr/0008_server_rendered_python_first_ui.md)
+  - [ADR 0009: Sequence myHealth Development After Agentic Foundation Work](docs/adr/0009_sequence_myhealth_after_agentic_foundation.md)
+  - [ADR 0010: Convert myHealth To A Harness Evaluation Target](docs/adr/0010_convert_myhealth_to_harness_evaluation_target.md)

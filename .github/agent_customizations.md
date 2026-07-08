@@ -18,7 +18,7 @@ This repository now includes VS Code agent customizations under .github and work
 - Skills strategy: workflow-based
 - Hook strictness: soft fail
 - Hook events: PreToolUse, PostToolUse, Stop
-- Validation stack in hooks: pytest, ruff, mypy, bandit, pip-audit (skips if tool missing)
+- Validation stack in hooks: hook JSON parsing and hook shell syntax checks
 - MCP targets: PostgreSQL and OpenAPI
 
 ## Skills vs prompts
@@ -37,4 +37,4 @@ This repository now includes VS Code agent customizations under .github and work
 ## Notes
 
 - There is no documented setting that reliably pins a custom agent as default in all chat entry points; selecting Code Reviewer in chat keeps your workflow aligned with your chosen default role.
-- Hook scripts are workspace-editable. Keep approvals enabled for edits to scripts/hooks if you want stricter governance.
+- Hook scripts are workspace-editable harness enforcement. Keep approvals enabled for edits to scripts/hooks if you want stricter governance.

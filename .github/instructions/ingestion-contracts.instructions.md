@@ -1,6 +1,6 @@
 ---
-description: "Use for upload registration, S3/object references, queue events, idempotency, parser strategies, ingestion workers, tests, or ingestion docs."
-applyTo: "src/myhealth/ingestion/**/*.py, src/myhealth/**/*.py, tests/**/*.py, docs/contracts/**/*.md, docs/architecture/**/*.md"
+description: "Use for upload registration, S3/object references, queue events, idempotency, parser strategies, ingestion worker concepts, or ingestion docs."
+applyTo: "docs/contracts/**/*.md, docs/architecture/**/*.md, docs/adr/**/*.md, .github/**/*.md"
 ---
 # Ingestion Contract Instructions
 
@@ -15,30 +15,27 @@ No parser receives bytes until the input has been:
 5. uploaded through the storage-first path
 6. represented as a queue task event
 
-## Active Implementation
+## Current Mode
 
-The Phase 1 contract layer lives under:
+The repository is currently a harness evaluation target. Product source
+code and tests are intentionally absent under ADR 0010.
 
-- `src/myhealth/ingestion/schemas.py`
-- `src/myhealth/ingestion/ports.py`
-- `src/myhealth/ingestion/idempotency.py`
-- `src/myhealth/ingestion/registration.py`
-- `src/myhealth/ingestion/events.py`
-- `src/myhealth/ingestion/strategies.py`
-- `tests/test_ingestion_contracts.py`
+The Phase 1 contract layer lives as documentation under:
+
 - `docs/contracts/ingestion_phase_1_contracts.md`
 
 ## Agent Rules
 
-- Treat schema dataclasses and enums as public contracts.
+- Treat documented schemas, events, and state transitions as public
+  contracts.
 - Preserve transaction assignment before parsing.
 - Preserve storage-first upload semantics.
 - Queue events should carry references and metadata, not raw bytes.
-- Idempotency behavior should be deterministic and covered by tests.
-- Parser selection should go through `StrategyRegistry`, not broad
-  conditional chains.
-- Add focused tests for new event fields, status transitions,
-  idempotency behavior, or parser registry behavior.
+- Idempotency behavior should remain deterministic.
+- Parser selection should remain strategy-based in future
+  implementation, not broad conditional chains.
+- Capture future test expectations in contracts or evaluation specs
+  until product implementation resumes.
 - Keep worker-specific dependencies out of the gateway layer.
 
 ## Worker Boundaries
