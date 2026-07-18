@@ -13,6 +13,12 @@ is designed to preserve independent of any single feature.
 - data movement between storage systems must preserve sensitivity
   classification and provenance
 - inference inputs must be bounded to approved context only
+- governed processing must fail closed when required consent cannot be
+  established
+- retention and deletion must include lineage-linked derivatives, not
+  only canonical source records
+- unstructured clinical text must pass an approved de-identification
+  boundary before use in retrieval or inference
 
 ## Reliability
 
@@ -39,6 +45,17 @@ is designed to preserve independent of any single feature.
 - schema and boundary decisions should be documented
 - inference behavior should be reviewable through bounded inputs and
   observable execution paths
+
+## Human Oversight And Responsibility
+
+- consequential workflows must identify a human decision owner
+- model output must remain distinct from authorized clinical action
+- reviewers must receive evidence, provenance, limitations, and
+  uncertainty needed for meaningful oversight
+- the system must preserve the model contribution, human disposition,
+  and abstention or escalation outcome without logging unnecessary PHI
+- disclaimers must not substitute for safe routing or enforceable
+  workflow boundaries
 
 ## Performance
 

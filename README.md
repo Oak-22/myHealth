@@ -33,6 +33,7 @@ myHealth delivers:
 Repo-specific documentation lives directly in [docs](docs):
 
 - [architecture](docs/architecture)
+- [research alignment](docs/research/README.md)
 - [product](docs/product)
 - [data](docs/data)
 - [adr](docs/adr)

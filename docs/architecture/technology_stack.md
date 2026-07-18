@@ -110,6 +110,10 @@ The following categories are deferred until product development resumes:
 - IAM 
 - interface endpoints for private Bedrock access
 - gateway endpoints for private S3 access
+- future attested confidential execution for selected clinical
+  preprocessing, key use, or controlled model-serving paths
+- fully homomorphic LLM inference is not part of the intended
+  interactive clinical stack
 
 ## Observability And Governance
 
