@@ -83,7 +83,7 @@ checked-in home and delete or archive the transient working version.
 ## Harness Template Posture
 
 Reusable LLM harness templates belong in the dedicated
-`ai_agent_instruction_control_plane` repository first. Promote only the
+`agent-instruction-control-plane` repository first. Promote only the
 myHealth-specific behavior into this repository, and keep it aligned
 with:
 

@@ -133,6 +133,6 @@ reviewer needs them or their contents become durable source-of-truth.
 
 Pipeline templates, GitHub Actions templates, IaC templates, and LLM
 harness templates are reusable platform assets. Their canonical home is
-the external `ai_agent_instruction_control_plane` repository unless the
+the external `agent-instruction-control-plane` repository unless the
 template defines myHealth-specific behavior that must travel with this
 codebase.

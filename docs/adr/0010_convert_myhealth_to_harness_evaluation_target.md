@@ -93,7 +93,7 @@ are reusable across projects.
 - Keep `scripts/hooks/` because hook scripts are harness enforcement.
 - Treat language and framework choices as deferred product decisions,
   not active implementation commitments.
-- Put reusable harness templates in `ai_agent_instruction_control_plane`
+- Put reusable harness templates in `agent-instruction-control-plane`
   unless the behavior is specific to `myHealth`.
 - Put reusable token and workflow observability concepts in
   `agentops-token-economics-observatory` unless the behavior is specific
