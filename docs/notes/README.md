@@ -88,7 +88,7 @@ relevant idea is promoted into `docs/architecture/`, `docs/contracts/`,
 
 ## Relationship To Personal Learning Notes
 
-Use `engineering_knowledge_base/personal_learning_notes/foundations/`
+Use `engineering_knowledge_base/personal/learning-notes/foundations/`
 for private learning notes: what was learned, why it mattered, and which
 habits or mental models should be reinforced during development.
 
