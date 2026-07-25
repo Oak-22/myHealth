@@ -131,8 +131,8 @@ reviewer needs them or their contents become durable source-of-truth.
 
 ## Template Boundary
 
-Pipeline templates, GitHub Actions templates, IaC templates, and LLM
-harness templates are reusable platform assets. Their canonical home is
-the external `agent-instruction-control-plane` repository unless the
+Pipeline templates, GitHub Actions templates, IaC templates, and LLM harness
+templates are reusable platform assets. Their canonical home is
+`agentic-engineering-platform/platform/agent-control-plane/` unless the
 template defines myHealth-specific behavior that must travel with this
 codebase.

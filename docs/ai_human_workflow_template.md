@@ -18,10 +18,10 @@ The active control-plane surface is artifact-typed:
 
 ## Template Ownership
 
-Reusable control-plane template evolution is now tracked in the
-dedicated repository:
+Reusable control-plane template evolution is now tracked in the Agentic
+Engineering Platform:
 
-- `agent-instruction-control-plane`
+- `platform/agent-control-plane/`
 
 Applied collaboration lessons and case studies are tracked in:
 
