@@ -33,6 +33,7 @@ myHealth delivers:
 Repo-specific documentation lives directly in [docs](docs):
 
 - [architecture](docs/architecture)
+- [research alignment](docs/research/README.md)
 - [product](docs/product)
 - [data](docs/data)
 - [adr](docs/adr)
@@ -48,6 +49,7 @@ Recommended starting points:
 - [Technology Stack](docs/architecture/technology_stack.md)
 - [Software Design Patterns Reference](docs/notes/software_design_patterns.md)
 - [Non-Functional Requirements](docs/architecture/non_functional_requirements.md)
+- [Backend Performance, Scale-Out, and Caching Plan](docs/architecture/performance_scaling_implementation_plan.md)
 - [Data Model](docs/data/data_model.md)
 - [Data Dictionary](docs/data/data_dictionary.md)
 - [Ingestion Phase 1 Contracts](docs/contracts/ingestion_phase_1_contracts.md)

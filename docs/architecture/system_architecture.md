@@ -421,6 +421,18 @@ Genomic variant datasets (e.g., ClinVar) follow a similar ingestion path but are
 - **Data minimization and pseudonymization** prior to embedding or ML usage.
 - **Audit-friendly storage models** enabling traceability of sensitive operations.
 
+Future privacy-control intent is defined separately so it is not
+mistaken for current implementation:
+
+- [Consent lifecycle](consent_lifecycle_intent.md)
+- [Retention and deletion](retention_deletion_intent.md)
+- [NLP de-identification](nlp_deidentification_intent.md)
+- [Hybrid inference routing](hybrid_inference_routing_intent.md)
+- [Abstention and answerability](abstention_answerability_intent.md)
+- [Patient edge privacy](patient_edge_privacy_intent.md)
+- [Confidential clinical inference](confidential_clinical_inference_intent.md)
+- [Research alignment and operator responsibility](../research/README.md)
+
 ## Observability and Governance
 
 Operational maturity is treated as a core engineering requirement.

@@ -61,7 +61,7 @@ relevant idea is promoted into `docs/architecture/`, `docs/contracts/`,
 
 - `agent-control-plane-convergence` was promoted out of local overlays
   as a dedicated external case study:
-  `ai_human_engineering_collaboration_case_studies_and_best_practices/case_study_03_agent_control_plane_convergence.md`
+  `ai-human-engineering-collaboration-case-studies-and-best-practices/case_study_03_agent_control_plane_convergence.md`
 - `clever-hans.instructions.md`
   Mechanistic-interpretability-inspired guidance for avoiding
   shortcut-learning failures in BioML-style agent systems. In this
@@ -88,7 +88,7 @@ relevant idea is promoted into `docs/architecture/`, `docs/contracts/`,
 
 ## Relationship To Personal Learning Notes
 
-Use `engineering_knowledge_base/personal_learning_notes/foundations/`
+Use `engineering_knowledge_base/personal/learning-notes/foundations/`
 for private learning notes: what was learned, why it mattered, and which
 habits or mental models should be reinforced during development.
 
